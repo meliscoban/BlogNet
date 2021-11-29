@@ -130,7 +130,7 @@ namespace BlogNet.Data
                 }
             };
 
-            context.Categories.Add(cat1);
+            context.Categories.AddRange(cat1, cat2, cat3, cat4);
             await context.SaveChangesAsync();
         }
 

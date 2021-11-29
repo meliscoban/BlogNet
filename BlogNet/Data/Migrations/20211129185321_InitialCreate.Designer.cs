@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogNet.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211126092121_Initial")]
-    partial class Initial
+    [Migration("20211129185321_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

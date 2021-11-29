@@ -10,20 +10,23 @@
     <link href="~/css/site.css" rel="stylesheet" />
     @await RenderSectionAsync("Styles", false)
 </head>
+
 <body>
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">BlogNet</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" asp-route-slug="">BlogNet</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index" asp-route-slug="">Home</a></li>
                     <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                 </ul>
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
+
     <!-- Page content-->
     <div class="container mt-4">
         <div class="row">
@@ -58,12 +61,15 @@
             </div>
         </div>
     </div>
+
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container"><p class="m-0 text-center text-white">Copyright &copy; BlogNet @DateTime.Now.Year</p></div>
     </footer>
+
     <!-- Bootstrap core JS-->
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
     <!-- Core theme JS-->
     <script src="~/js/site.js"></script>
     @await RenderSectionAsync("Scripts", false)
