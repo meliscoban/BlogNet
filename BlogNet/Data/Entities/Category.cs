@@ -13,6 +13,9 @@ namespace BlogNet.Data.Entities
         [Required, MaxLength(100)]
         public string Name { get; set; }
 
+        [Required, MaxLength(100)]
+        public string Slug { get; set; }
+
         public ICollection<Post> Posts { get; set; }
     }
 }
