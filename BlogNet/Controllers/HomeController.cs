@@ -26,14 +26,20 @@ namespace BlogNet.Controllers
 
         [Route("c/{slug}")]
         [Route("")]
-        public IActionResult Index(string slug, int pageNumber = 1)
+        public IActionResult Index(string slug, string q, int pageNumber = 1)
         {
             ViewBag.Slug = slug;
             IQueryable<Post> posts = _context.Posts;
-
+            Category category = null;
             if (!string.IsNullOrEmpty(slug))
             {
                 posts = posts.Where(x => x.Category.Slug == slug);
+                category = _context.Categories.FirstOrDefault(x => x.Slug == slug);
+            }
+
+            if (!string.IsNullOrEmpty(q))
+            {
+                posts = posts.Where(x => x.Title.Contains(q) || x.Content.Contains(q));
             }
 
             int totalItems = posts.Count();
@@ -43,6 +49,7 @@ namespace BlogNet.Controllers
 
             var vm = new HomeViewModel()
             {
+                Category = category,
                 Posts = posts.ToList(),
                 PaginationInfo = new PaginationViewModel()
                 {
@@ -55,7 +62,8 @@ namespace BlogNet.Controllers
                     ItemsPerPage = POSTS_PER_PAGE,
                     ResultsStart = (pageNumber - 1) * POSTS_PER_PAGE + 1,
                     ResultsEnd = (pageNumber - 1) * POSTS_PER_PAGE + postsList.Count
-                }
+                },
+                SearchCriteria = q
             };
 
             return View(vm);
@@ -77,38 +85,5 @@ namespace BlogNet.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        //int[] PageNumbers(int current, int last)
-        //{
-        //    int delta = 2, l = 0;
-
-        //    int left = current - delta;
-        //    int right = current + delta + 1;
-
-        //    List<int> range = new List<int>();
-        //    List<int> rangeWithDots = new List<int>();
-
-        //    for (int i = 1; i <= last; i++)
-        //    {
-        //        if (i == 1 || i == last || i >= left && i < right)
-        //            range.Add(i);
-        //    }
-
-        //    foreach (var i in range)
-        //    {
-        //        if (l != 0)
-        //        {
-        //            if (i - l == 2)
-        //                rangeWithDots.Add(l + 1);
-        //            else if (i - l != 1)
-        //                rangeWithDots.Add(-1);
-        //        }
-        //        rangeWithDots.Add(i);
-        //        l = i;
-        //    }
-
-        //    return rangeWithDots.ToArray();
-        //}
-
     }
 }

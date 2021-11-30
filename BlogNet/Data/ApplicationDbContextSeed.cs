@@ -17,7 +17,7 @@ namespace BlogNet.Data
             {
                 Email = "admin@example.com",
                 UserName = "admin@example.com",
-                EmailConfirmed = true,
+                EmailConfirmed = true
             };
 
             await userManager.CreateAsync(user, "P@ssword1");
